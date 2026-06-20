@@ -1,7 +1,12 @@
 # 🏦 Aplikasi Prediksi Risiko Gagal Bayar Kredit (Streamlit)
 
 Repositori ini berisi aplikasi web interaktif **Loan Default Risk Predictor** yang dibangun menggunakan Streamlit. Aplikasi ini mendeteksi risiko gagal bayar (default) calon nasabah berdasarkan model Machine Learning (LightGBM, CatBoost, Logistic Regression) yang telah dituning.
+---
 
+## Link GOOGLE COLLAB
+
+https://colab.research.google.com/drive/1lNBUs7WxLaTd5j4IRQfKuNKsTyWb8_bd#scrollTo=7mQtfgxXWDux
+---
 ---
 
 ## 📂 Struktur Folder App

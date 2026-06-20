@@ -1,0 +1,415 @@
+{
+  "threshold_results": [
+    {
+      "Model": "Logistic Regression",
+      "Threshold Optimal": 0.513,
+      "Recall @0.5": 0.4087,
+      "Recall @Optimal": 0.3948,
+      "Precision @Optimal": 0.2318,
+      "F1 @Optimal": 0.2921
+    },
+    {
+      "Model": "LightGBM",
+      "Threshold Optimal": 0.156,
+      "Recall @0.5": 0.031,
+      "Recall @Optimal": 0.3964,
+      "Precision @Optimal": 0.2329,
+      "F1 @Optimal": 0.2934
+    },
+    {
+      "Model": "CatBoost",
+      "Threshold Optimal": 0.16,
+      "Recall @0.5": 0.0284,
+      "Recall @Optimal": 0.4157,
+      "Precision @Optimal": 0.2333,
+      "F1 @Optimal": 0.2989
+    }
+  ],
+  "model_metrics": [
+    {
+      "Model": "CatBoost",
+      "AUC": 0.7493584989866986,
+      "Recall": 0.0283987915407855,
+      "F1-Score": 0.0537040563702152,
+      "Accuracy": 0.9192071931450498,
+      "Train Time (s)": 2827.883332967758,
+      "Inference Time (s)": 0.28164029121398926
+    },
+    {
+      "Model": "LightGBM",
+      "AUC": 0.7414555217022537,
+      "Recall": 0.031017119838872106,
+      "F1-Score": 0.05812417437252312,
+      "Accuracy": 0.9188494870168935,
+      "Train Time (s)": 3506.281468153,
+      "Inference Time (s)": 6.99231481552124
+    },
+    {
+      "Model": "Logistic Regression",
+      "AUC": 0.7411273694595053,
+      "Recall": 0.40866062437059414,
+      "F1-Score": 0.28905192677541136,
+      "Accuracy": 0.8377152334032486,
+      "Train Time (s)": 313.03022861480713,
+      "Inference Time (s)": 0.032507896423339844
+    }
+  ],
+  "comparison_table": [
+    {
+      "Model": "Logistic Regression",
+      "Pendekatan": "SMOTE (Thresh=0.5)",
+      "Threshold": 0.5,
+      "Accuracy": 0.8377,
+      "Precision": 0.2236,
+      "Recall": 0.4087,
+      "F1-Score": 0.2891,
+      "AUC": 0.7411
+    },
+    {
+      "Model": "Logistic Regression",
+      "Pendekatan": "SMOTE + Tuning",
+      "Threshold": 0.513,
+      "Accuracy": 0.8455,
+      "Precision": 0.2318,
+      "Recall": 0.3948,
+      "F1-Score": 0.2921,
+      "AUC": 0.7411
+    },
+    {
+      "Model": "LightGBM",
+      "Pendekatan": "SMOTE (Thresh=0.5)",
+      "Threshold": 0.5,
+      "Accuracy": 0.9188,
+      "Precision": 0.4611,
+      "Recall": 0.031,
+      "F1-Score": 0.0581,
+      "AUC": 0.7415
+    },
+    {
+      "Model": "LightGBM",
+      "Pendekatan": "SMOTE + Tuning",
+      "Threshold": 0.156,
+      "Accuracy": 0.8459,
+      "Precision": 0.2329,
+      "Recall": 0.3964,
+      "F1-Score": 0.2934,
+      "AUC": 0.7415
+    },
+    {
+      "Model": "CatBoost",
+      "Pendekatan": "SMOTE (Thresh=0.5)",
+      "Threshold": 0.5,
+      "Accuracy": 0.9192,
+      "Precision": 0.493,
+      "Recall": 0.0284,
+      "F1-Score": 0.0537,
+      "AUC": 0.7494
+    },
+    {
+      "Model": "CatBoost",
+      "Pendekatan": "SMOTE + Tuning",
+      "Threshold": 0.16,
+      "Accuracy": 0.8426,
+      "Precision": 0.2333,
+      "Recall": 0.4157,
+      "F1-Score": 0.2989,
+      "AUC": 0.7494
+    },
+    {
+      "Model": "LightGBM",
+      "Pendekatan": "Class Weight (Thresh=0.5)",
+      "Threshold": 0.5,
+      "Accuracy": 0.6982,
+      "Precision": 0.1657,
+      "Recall": 0.6785,
+      "F1-Score": 0.2663,
+      "AUC": 0.7566
+    },
+    {
+      "Model": "CatBoost",
+      "Pendekatan": "Class Weight (Thresh=0.5)",
+      "Threshold": 0.5,
+      "Accuracy": 0.7412,
+      "Precision": 0.1784,
+      "Recall": 0.6117,
+      "F1-Score": 0.2762,
+      "AUC": 0.7503
+    }
+  ],
+  "lgd_before": 2775357715.5,
+  "lgd_results": [
+    {
+      "Model": "Logistic Regression",
+      "Uang Diselamatkan": 1082683944.0,
+      "Sisa Kerugian (LGD After)": 1692673771.5,
+      "Persentase Penghematan": 39.01060890109248
+    },
+    {
+      "Model": "LightGBM",
+      "Uang Diselamatkan": 78106585.5,
+      "Sisa Kerugian (LGD After)": 2697251130.0,
+      "Persentase Penghematan": 2.8142889496292756
+    },
+    {
+      "Model": "CatBoost",
+      "Uang Diselamatkan": 68294344.5,
+      "Sisa Kerugian (LGD After)": 2707063371.0,
+      "Persentase Penghematan": 2.46074025407915
+    }
+  ],
+  "delong_pvalues": {
+    "Logistic Regression vs LightGBM": 0.5738703544156083,
+    "Logistic Regression vs CatBoost": 0.8722809017784294,
+    "LightGBM vs CatBoost": 0.3394378253956609
+  },
+  "dataset_info": {
+    "total_records": 307511,
+    "default_pct": 8.072881945686495,
+    "n_features_original": 122,
+    "n_features_after_ohe": 239,
+    "n_features_selected": 34,
+    "train_size": 246008,
+    "test_size": 61503,
+    "smote_train_size": 339222
+  },
+  "feature_stats": {
+    "EXT_SOURCE_3": {
+      "min": 0.0005272652387098,
+      "max": 0.8960095494948396,
+      "mean": 0.5157127805718793,
+      "median": 0.5352762504724826,
+      "std": 0.17465495283382262
+    },
+    "EXT_SOURCE_2": {
+      "min": 8.173616518884397e-08,
+      "max": 0.8549996664047012,
+      "mean": 0.5144148434455188,
+      "median": 0.5659130796679341,
+      "std": 0.19093432809920297
+    },
+    "EXT_SOURCE_1": {
+      "min": 0.0145681324124455,
+      "max": 0.9516239622079844,
+      "mean": 0.5037884883360143,
+      "median": 0.5054455334342673,
+      "std": 0.13970855099575602
+    },
+    "AGE_YEARS": {
+      "min": 20.517808219178082,
+      "max": 69.12054794520547,
+      "mean": 43.91648186739,
+      "median": 43.134246575342466,
+      "std": 11.95306585549007
+    },
+    "DAYS_BIRTH": {
+      "min": -25229.0,
+      "max": -7489.0,
+      "mean": -16029.515881597346,
+      "median": -15744.0,
+      "std": 4362.869037253864
+    },
+    "DAYS_EMPLOYED": {
+      "min": -17912.0,
+      "max": 0.0,
+      "mean": -2252.74994715619,
+      "median": -1648.0,
+      "std": 2138.222300530733
+    },
+    "YEARS_EMPLOYED": {
+      "min": -0.0,
+      "max": 49.07397260273972,
+      "mean": 6.171917663441619,
+      "median": 4.515068493150685,
+      "std": 5.858143289126359
+    },
+    "REGION_RATING_CLIENT_W_CITY": {
+      "min": 1.0,
+      "max": 3.0,
+      "mean": 2.031462391466944,
+      "median": 2.0,
+      "std": 0.5025977753784353
+    },
+    "REGION_RATING_CLIENT": {
+      "min": 1.0,
+      "max": 3.0,
+      "mean": 2.052303177132451,
+      "median": 2.0,
+      "std": 0.5088733065262491
+    },
+    "NAME_INCOME_TYPE_Working": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.5164181652629183,
+      "median": 1.0,
+      "std": 0.4997313868328098
+    },
+    "NAME_EDUCATION_TYPE_Higher education": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.2430896556209554,
+      "median": 0.0,
+      "std": 0.42894967406963946
+    },
+    "DAYS_LAST_PHONE_CHANGE": {
+      "min": -4292.0,
+      "max": 0.0,
+      "mean": -962.6647507398134,
+      "median": -757.0,
+      "std": 826.7809973510064
+    },
+    "CODE_GENDER_M": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.3419360346005008,
+      "median": 0.0,
+      "std": 0.4743592494241894
+    },
+    "EMPLOYMENT_TO_INCOME_RATIO": {
+      "min": -0.0,
+      "max": 0.001148684496629702,
+      "mean": 4.287392247743796e-05,
+      "median": 2.823439878234399e-05,
+      "std": 5.050583293237027e-05
+    },
+    "DAYS_ID_PUBLISH": {
+      "min": -7197.0,
+      "max": 0.0,
+      "mean": -2994.1504381971317,
+      "median": -3255.0,
+      "std": 1508.2745699205486
+    },
+    "REG_CITY_NOT_WORK_CITY": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.23104533185912654,
+      "median": 0.0,
+      "std": 0.42150220482583967
+    },
+    "NAME_EDUCATION_TYPE_Secondary / secondary special": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.7104159214334493,
+      "median": 1.0,
+      "std": 0.4535702550485145
+    },
+    "NAME_INCOME_TYPE_Pensioner": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.17940066989691392,
+      "median": 0.0,
+      "std": 0.3836882431869903
+    },
+    "ORGANIZATION_TYPE_XNA": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.1794372540730383,
+      "median": 0.0,
+      "std": 0.3837188090794095
+    },
+    "FLAG_EMP_PHONE": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.8205180319339208,
+      "median": 1.0,
+      "std": 0.3837561593500471
+    },
+    "REG_CITY_NOT_LIVE_CITY": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.07789584078566551,
+      "median": 0.0,
+      "std": 0.26800815425943914
+    },
+    "FLAG_DOCUMENT_3": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.7104484407011155,
+      "median": 1.0,
+      "std": 0.4535551675466713
+    },
+    "FLOORSMAX_AVG": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.19661450969074173,
+      "median": 0.1667,
+      "std": 0.10670361744878244
+    },
+    "FLOORSMAX_MEDI": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.19642713854833993,
+      "median": 0.1667,
+      "std": 0.10694782902409468
+    },
+    "FLOORSMAX_MODE": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.19461491699456931,
+      "median": 0.1667,
+      "std": 0.10553711563918791
+    },
+    "OCCUPATION_TYPE_Laborers": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.1799087834541966,
+      "median": 0.0,
+      "std": 0.3841122398930823
+    },
+    "DAYS_REGISTRATION": {
+      "min": -24672.0,
+      "max": 0.0,
+      "mean": -4989.5850053656795,
+      "median": -4505.0,
+      "std": 3524.5572313981797
+    },
+    "AMT_GOODS_PRICE": {
+      "min": 40500.0,
+      "max": 4050000.0,
+      "mean": 538573.3394686352,
+      "median": 450000.0,
+      "std": 369438.5472638163
+    },
+    "OWN_CAR_AGE": {
+      "min": 0.0,
+      "max": 91.0,
+      "mean": 10.038848330135606,
+      "median": 9.0,
+      "std": 7.092570713624308
+    },
+    "REGION_POPULATION_RELATIVE": {
+      "min": 0.00029,
+      "max": 0.072508,
+      "mean": 0.02085828202334883,
+      "median": 0.01885,
+      "std": 0.01383456181821214
+    },
+    "AMT_CREDIT": {
+      "min": 45000.0,
+      "max": 4050000.0,
+      "mean": 599338.2493679067,
+      "median": 514777.5,
+      "std": 402725.7733046519
+    },
+    "AMT_ANNUITY": {
+      "min": 1615.5,
+      "max": 258025.5,
+      "mean": 27108.000073168354,
+      "median": 24903.0,
+      "std": 14520.615758229334
+    },
+    "AMT_INCOME_TOTAL": {
+      "min": 25650.0,
+      "max": 117000000.0,
+      "mean": 168853.18069898136,
+      "median": 147600.0,
+      "std": 258960.63224973847
+    },
+    "INCOME_TO_ANNUITY_RATIO": {
+      "min": 0.6366993505666624,
+      "max": 4466.5864971654355,
+      "mean": 7.359354298585606,
+      "median": 6.141248720573183,
+      "std": 10.272159726063338
+    }
+  }
+}

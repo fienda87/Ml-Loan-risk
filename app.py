@@ -389,9 +389,18 @@ if page == "Prediksi":
     </div>
     """, unsafe_allow_html=True)
 
-    # Get optimal threshold for LightGBM
+    # Model Selection for Prediction
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("### Pengaturan Model")
+    model_choice = st.sidebar.selectbox(
+        "Pilih Model AI:",
+        ["LightGBM", "CatBoost", "Logistic Regression"],
+        index=0,
+        help="Pilih model Machine Learning yang digunakan untuk melakukan prediksi."
+    )
+
     thresh_data = {r["Model"]: r for r in config["threshold_results"]}
-    lgb_threshold = thresh_data.get("LightGBM", {}).get("Threshold Optimal", 0.147)
+    chosen_threshold = thresh_data.get(model_choice, {}).get("Threshold Optimal", 0.5)
 
     # --- Input form in sidebar ---
     with st.sidebar:
@@ -491,16 +500,16 @@ if page == "Prediksi":
     if IS_DEMO:
         prob = predict_demo(input_data)
     else:
-        prob = predict_real(input_data, "LightGBM")
+        prob = predict_real(input_data, model_choice)
 
-    risk_label, risk_class = get_risk_level(prob, lgb_threshold)
-    rec_label, rec_detail, rec_class = get_recommendation(prob, lgb_threshold)
+    risk_label, risk_class = get_risk_level(prob, chosen_threshold)
+    rec_label, rec_detail, rec_class = get_recommendation(prob, chosen_threshold)
 
     # --- Display Results ---
     col_gauge, col_info = st.columns([1, 1])
 
     with col_gauge:
-        st.plotly_chart(make_gauge(prob, lgb_threshold), use_container_width=True)
+        st.plotly_chart(make_gauge(prob, chosen_threshold), use_container_width=True)
 
     with col_info:
         st.markdown(f"<div style='text-align:center; padding-top:1rem;'><span class='{risk_class}'>{risk_label}</span></div>", unsafe_allow_html=True)
@@ -516,9 +525,12 @@ if page == "Prediksi":
         with m1:
             st.metric("Probabilitas", f"{prob*100:.1f}%")
         with m2:
-            st.metric("Threshold", f"{lgb_threshold*100:.1f}%")
+            st.metric("Threshold", f"{chosen_threshold*100:.1f}%")
         with m3:
-            st.metric("Model AUC", f"{thresh_data.get('LightGBM', {}).get('F1 @Optimal', 0.2962):.4f}")
+            # Get AUC of selected model from results
+            metrics_data = {r["Model"]: r for r in config["model_metrics"]}
+            selected_auc = metrics_data.get(model_choice, {}).get("AUC", 0.74)
+            st.metric("Model AUC", f"{selected_auc:.4f}")
 
     # Comparison across thresholds
     st.markdown("---")

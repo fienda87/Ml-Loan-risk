@@ -28,8 +28,8 @@ from pathlib import Path
 # ============================================
 
 st.set_page_config(
-    page_title="Loan Default Risk Predictor",
-    page_icon="🏦",
+    page_title="Prediksi Risiko Gagal Bayar Kredit Konsumen",
+    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -69,9 +69,9 @@ st.markdown("""
         margin: 0.5rem 0;
         font-size: 1rem;
     }
-    .rec-reject { background: #fed7d7; border-left: 5px solid #e53e3e; }
-    .rec-review { background: #fefcbf; border-left: 5px solid #dd6b20; }
-    .rec-approve { background: #c6f6d5; border-left: 5px solid #38a169; }
+    .rec-reject { background: #fed7d7; color: #742a2a; border-left: 5px solid #e53e3e; }
+    .rec-review { background: #fefcbf; color: #744210; border-left: 5px solid #dd6b20; }
+    .rec-approve { background: #c6f6d5; color: #22543d; border-left: 5px solid #38a169; }
 
     .stTabs [data-baseweb="tab-list"] { gap: 8px; }
     .stTabs [data-baseweb="tab"] {
@@ -361,11 +361,11 @@ def make_gauge(prob, threshold):
 # ============================================
 
 with st.sidebar:
-    st.markdown("### 🏦 Navigation")
+    st.markdown("### Navigasi")
     page = st.radio(
         "Pilih Halaman:",
-        ["🏠 Prediksi", "📊 Model Performance", "🔬 SHAP Explainability",
-         "💰 Simulasi LGD", "ℹ️ About"],
+        ["Prediksi", "Model Performance", "SHAP Explainability",
+         "Simulasi LGD", "About"],
         label_visibility="collapsed"
     )
 
@@ -381,10 +381,10 @@ with st.sidebar:
 # PAGE 1: PREDIKSI
 # ============================================
 
-if page == "🏠 Prediksi":
+if page == "Prediksi":
     st.markdown("""
     <div class="main-header">
-        <h1>🏦 Loan Default Risk Predictor</h1>
+        <h1>Prediksi Risiko Gagal Bayar Kredit Konsumen</h1>
         <p>Sistem prediksi risiko gagal bayar berbasis Machine Learning — ML Group 2 ITK</p>
     </div>
     """, unsafe_allow_html=True)
@@ -396,24 +396,24 @@ if page == "🏠 Prediksi":
     # --- Input form in sidebar ---
     with st.sidebar:
         st.markdown("---")
-        st.markdown("### 📋 Input Data Nasabah")
+        st.markdown("### Input Data Nasabah")
 
         stats = config.get("feature_stats", {})
 
         # Group features logically
-        st.markdown("#### 🔑 Skor Kredit Eksternal")
+        st.markdown("#### Skor Kredit Eksternal")
         ext3 = st.slider("EXT_SOURCE_3", 0.0, 1.0, 0.51, 0.01, help="Skor dari sumber eksternal 3")
         ext2 = st.slider("EXT_SOURCE_2", 0.0, 1.0, 0.51, 0.01, help="Skor dari sumber eksternal 2")
         ext1 = st.slider("EXT_SOURCE_1", 0.0, 1.0, 0.50, 0.01, help="Skor dari sumber eksternal 1")
 
-        st.markdown("#### 💰 Informasi Finansial")
+        st.markdown("#### Informasi Finansial")
         amt_credit = st.number_input("Jumlah Kredit (AMT_CREDIT)", 25000, 5000000, 500000, 10000)
         amt_income = st.number_input("Pendapatan Tahunan (AMT_INCOME_TOTAL)", 25000, 120000000, 168000, 10000)
         amt_annuity = st.number_input("Cicilan Tahunan (AMT_ANNUITY)", 1500, 260000, 27000, 1000)
         amt_goods_price = st.number_input("Harga Barang (AMT_GOODS_PRICE)", 25000, 5000000, 450000, 10000)
         income_to_annuity = amt_income / max(amt_annuity, 1)
 
-        st.markdown("#### 👤 Informasi Personal")
+        st.markdown("#### Informasi Personal")
         age = st.slider("Usia (AGE_YEARS)", 20, 69, 44, 1)
         years_employed = st.slider("Tahun Bekerja (YEARS_EMPLOYED)", 0.0, 49.0, 6.0, 0.5)
         code_gender = st.selectbox("Jenis Kelamin (CODE_GENDER)", ["Perempuan", "Laki-laki"])
@@ -425,7 +425,7 @@ if page == "🏠 Prediksi":
         else:
             own_car_age = np.nan
 
-        st.markdown("#### 🏢 Profil Pekerjaan & Lokasi")
+        st.markdown("#### Profil Pekerjaan & Lokasi")
         is_laborer = st.selectbox("Pekerjaan: Buruh / Laborer?", [0, 1], index=0)
         region_rating_wc = st.selectbox("Rating Region + City", [1, 2, 3], index=1)
         region_rating = st.selectbox("Rating Region", [1, 2, 3], index=1)
@@ -439,7 +439,7 @@ if page == "🏠 Prediksi":
         reg_city_not_work = st.selectbox("Kota Registrasi ≠ Kota Kerja?", [0, 1], index=0)
         reg_city_not_live = st.selectbox("Kota Registrasi ≠ Kota Tinggal?", [0, 1], index=0)
 
-        st.markdown("#### 🏢 Informasi Properti & Dokumen")
+        st.markdown("#### Informasi Properti & Dokumen")
         floorsmax = st.slider("Floors Max (Informasi Apartemen)", 0.0, 1.0, 0.16, 0.01)
         days_phone = st.number_input("DAYS_LAST_PHONE_CHANGE", -4300, 0, -960, 10)
         years_id = st.slider("YEARS_ID_PUBLISH", 0.0, 20.0, 8.0, 0.1)
@@ -522,7 +522,7 @@ if page == "🏠 Prediksi":
 
     # Comparison across thresholds
     st.markdown("---")
-    st.subheader("⚖️ Perbandingan Keputusan Antar Model & Threshold")
+    st.subheader("Perbandingan Keputusan Antar Model & Threshold")
 
     compare_rows = []
     for t in config["threshold_results"]:
@@ -548,7 +548,7 @@ if page == "🏠 Prediksi":
         **{k: v for k, v in input_data.items()}
     }])
     st.download_button(
-        "📥 Download Hasil Prediksi (CSV)",
+        "Download Hasil Prediksi (CSV)",
         pred_df.to_csv(index=False),
         "prediction_result.csv",
         "text/csv"
@@ -559,15 +559,15 @@ if page == "🏠 Prediksi":
 # PAGE 2: MODEL PERFORMANCE
 # ============================================
 
-elif page == "📊 Model Performance":
+elif page == "Model Performance":
     st.markdown("""
     <div class="main-header">
-        <h1>📊 Model Performance Dashboard</h1>
+        <h1>Model Performance Dashboard</h1>
         <p>Perbandingan performa 3 model: Logistic Regression, LightGBM, CatBoost</p>
     </div>
     """, unsafe_allow_html=True)
 
-    tabs = st.tabs(["📋 Ringkasan", "🔄 Komparasi 3-Cara", "📈 ROC & PR Curve", "🧪 DeLong Test"])
+    tabs = st.tabs(["Ringkasan", "Komparasi 3-Cara", "ROC & PR Curve", "DeLong Test"])
 
     # Tab 1: Model Summary
     with tabs[0]:
@@ -653,10 +653,10 @@ elif page == "📊 Model Performance":
 # PAGE 3: SHAP EXPLAINABILITY
 # ============================================
 
-elif page == "🔬 SHAP Explainability":
+elif page == "SHAP Explainability":
     st.markdown("""
     <div class="main-header">
-        <h1>🔬 SHAP Explainability</h1>
+        <h1>SHAP Explainability</h1>
         <p>Memahami faktor-faktor yang mempengaruhi prediksi model</p>
     </div>
     """, unsafe_allow_html=True)
@@ -702,7 +702,7 @@ elif page == "🔬 SHAP Explainability":
     st.plotly_chart(fig, use_container_width=True)
 
     # Explanation table
-    st.markdown("### 📝 Interpretasi Fitur")
+    st.markdown("### Interpretasi Fitur")
     explain_df = pd.DataFrame({
         "Fitur": feat_names_shap,
         "SHAP Importance": feat_vals,
@@ -722,10 +722,10 @@ elif page == "🔬 SHAP Explainability":
 # PAGE 4: SIMULASI LGD
 # ============================================
 
-elif page == "💰 Simulasi LGD":
+elif page == "Simulasi LGD":
     st.markdown("""
     <div class="main-header">
-        <h1>💰 Simulasi Loss Given Default (LGD)</h1>
+        <h1>Simulasi Loss Given Default (LGD)</h1>
         <p>Dampak bisnis penerapan model — berapa uang yang bisa diselamatkan?</p>
     </div>
     """, unsafe_allow_html=True)
@@ -785,7 +785,7 @@ elif page == "💰 Simulasi LGD":
                 seen.add(trace.name)
         st.plotly_chart(fig, use_container_width=True)
 
-        st.markdown("### 📋 Tabel Detail LGD")
+        st.markdown("### Tabel Detail LGD")
         display_lgd = lgd_df.copy()
         for col_name in ["Uang Diselamatkan", "Sisa Kerugian (LGD After)"]:
             if col_name in display_lgd.columns:
@@ -805,15 +805,15 @@ elif page == "💰 Simulasi LGD":
 # PAGE 5: ABOUT & TECHNICAL
 # ============================================
 
-elif page == "ℹ️ About":
+elif page == "About":
     st.markdown("""
     <div class="main-header">
-        <h1>ℹ️ About & Technical Details</h1>
+        <h1>About & Technical Details</h1>
         <p>Arsitektur pipeline, dataset, dan referensi ilmiah</p>
     </div>
     """, unsafe_allow_html=True)
 
-    tabs = st.tabs(["🔧 Pipeline", "📚 Dataset", "📖 Referensi", "⚠️ Disclaimer"])
+    tabs = st.tabs(["Pipeline", "Dataset", "Referensi", "Disclaimer"])
 
     with tabs[0]:
         st.subheader("Arsitektur Pipeline End-to-End")
@@ -912,9 +912,9 @@ elif page == "ℹ️ About":
         """)
 
     with tabs[3]:
-        st.subheader("⚠️ Disclaimer & Limitations")
+        st.subheader("Disclaimer & Limitations")
         st.warning("""
-        **PERINGATAN:**
+        **Peringatan:**
 
         1. **Tujuan Akademis**: Model ini dibuat untuk tugas kuliah Machine Learning di Institut Teknologi Kalimantan.
            Tidak boleh digunakan untuk keputusan kredit riil tanpa validasi dari ahli keuangan.
@@ -943,9 +943,9 @@ elif page == "ℹ️ About":
 st.markdown("---")
 st.markdown(f"""
 <div style='text-align: center; color: gray; font-size: 0.85rem; padding: 1rem 0;'>
-    <p>🏦 <strong>Loan Default Risk Predictor v2.0</strong></p>
+    <p><strong>Prediksi Risiko Gagal Bayar Kredit Konsumen v2.0</strong></p>
     <p>ML Group 2 — Institut Teknologi Kalimantan</p>
     <p>Models: LightGBM + CatBoost + Logistic Regression | Dataset: Home Credit Default Risk</p>
-    <p>{"🔶 Demo Mode" if IS_DEMO else "🟢 Production Mode"}</p>
+    <p>{"Demo Mode" if IS_DEMO else "Production Mode"}</p>
 </div>
 """, unsafe_allow_html=True)

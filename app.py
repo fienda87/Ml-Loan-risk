@@ -247,11 +247,18 @@ feature_names = real_data["feature_names"] if not IS_DEMO else config["feature_n
 def predict_real(input_dict, model_name="LightGBM"):
     """Predict using real model loaded from .pkl."""
     models = real_data["models"]
-    imputer = real_data["imputer"]
     model = models[model_name]
     input_df = pd.DataFrame([input_dict])[feature_names]
-    input_imputed = pd.DataFrame(imputer.transform(input_df), columns=feature_names)
-    prob = model.predict_proba(input_imputed)[0][1]
+    
+    # Impute missing values manually using medians from config.json
+    # This prevents scikit-learn version mismatch errors (AttributeError/KeyError) on Streamlit Cloud
+    stats = config.get("feature_stats", {})
+    for col in feature_names:
+        if input_df[col].isnull().any():
+            median_val = stats.get(col, {}).get("median", 0.0)
+            input_df[col] = input_df[col].fillna(median_val)
+            
+    prob = model.predict_proba(input_df)[0][1]
     return prob
 
 

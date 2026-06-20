@@ -403,23 +403,27 @@ if page == "🏠 Prediksi":
         amt_credit = st.number_input("Jumlah Kredit (AMT_CREDIT)", 25000, 5000000, 500000, 10000)
         amt_income = st.number_input("Pendapatan Tahunan (AMT_INCOME_TOTAL)", 25000, 120000000, 168000, 10000)
         amt_annuity = st.number_input("Cicilan Tahunan (AMT_ANNUITY)", 1500, 260000, 27000, 1000)
+        amt_goods_price = st.number_input("Harga Barang (AMT_GOODS_PRICE)", 25000, 5000000, 450000, 10000)
         income_to_annuity = amt_income / max(amt_annuity, 1)
 
         st.markdown("#### 👤 Informasi Personal")
         age = st.slider("Usia (AGE_YEARS)", 20, 69, 44, 1)
         years_employed = st.slider("Tahun Bekerja (YEARS_EMPLOYED)", 0.0, 49.0, 6.0, 0.5)
-        code_gender = st.selectbox("Jenis Kelamin (CODE_GENDER)", [0, 1], format_func=lambda x: "Perempuan" if x == 0 else "Laki-laki")
-
-        st.markdown("#### 📊 Riwayat Kredit & Sosial")
-        def_30 = st.number_input("Default 30 Hari (DEF_30_CNT_SOCIAL_CIRCLE)", 0, 34, 0)
-        def_60 = st.number_input("Default 60 Hari (DEF_60_CNT_SOCIAL_CIRCLE)", 0, 24, 0)
-        obs_30 = st.number_input("Observasi 30 Hari (OBS_30_CNT_SOCIAL_CIRCLE)", 0, 348, 1)
-        obs_60 = st.number_input("Observasi 60 Hari (OBS_60_CNT_SOCIAL_CIRCLE)", 0, 344, 1)
-        amt_req_qrt = st.number_input("Req. Credit Bureau (QRT)", 0, 261, 0)
+        code_gender = st.selectbox("Jenis Kelamin (CODE_GENDER)", ["Perempuan", "Laki-laki"])
+        code_gender_m = 1 if code_gender == "Laki-laki" else 0
+        
+        has_car = st.checkbox("Memiliki Mobil?", value=False)
+        if has_car:
+            own_car_age = st.slider("Usia Mobil (Tahun)", 0.0, 91.0, 9.0, 1.0)
+        else:
+            own_car_age = np.nan
 
         st.markdown("#### 🏢 Profil Pekerjaan & Lokasi")
+        is_laborer = st.selectbox("Pekerjaan: Buruh / Laborer?", [0, 1], index=0)
         region_rating_wc = st.selectbox("Rating Region + City", [1, 2, 3], index=1)
         region_rating = st.selectbox("Rating Region", [1, 2, 3], index=1)
+        region_pop = st.slider("Kepadatan Penduduk Wilayah (REGION_POPULATION_RELATIVE)", 0.00029, 0.0725, 0.0188, 0.0001)
+        
         income_working = st.selectbox("Tipe Pendapatan: Working?", [0, 1], index=1)
         income_pensioner = st.selectbox("Tipe Pendapatan: Pensioner?", [0, 1], index=0)
         edu_higher = st.selectbox("Pendidikan Tinggi?", [0, 1], index=0)
@@ -427,53 +431,53 @@ if page == "🏠 Prediksi":
         org_xna = st.selectbox("Organisasi: XNA?", [0, 1], index=0)
         reg_city_not_work = st.selectbox("Kota Registrasi ≠ Kota Kerja?", [0, 1], index=0)
         reg_city_not_live = st.selectbox("Kota Registrasi ≠ Kota Tinggal?", [0, 1], index=0)
-        live_city_not_work = st.selectbox("Kota Tinggal ≠ Kota Kerja?", [0, 1], index=0)
 
-        st.markdown("#### 📱 Informasi Lainnya")
+        st.markdown("#### 🏢 Informasi Properti & Dokumen")
+        floorsmax = st.slider("Floors Max (Informasi Apartemen)", 0.0, 1.0, 0.16, 0.01)
         days_phone = st.number_input("DAYS_LAST_PHONE_CHANGE", -4300, 0, -960, 10)
         years_id = st.slider("YEARS_ID_PUBLISH", 0.0, 20.0, 8.0, 0.1)
         years_reg = st.slider("YEARS_REGISTRATION", 0.0, 68.0, 14.0, 0.5)
         flag_emp_phone = st.selectbox("FLAG_EMP_PHONE", [0, 1], index=1)
-        flag_work_phone = st.selectbox("FLAG_WORK_PHONE", [0, 1], index=0)
-        contract_revolving = st.selectbox("Revolving Loan?", [0, 1], index=0)
         flag_doc3 = st.selectbox("FLAG_DOCUMENT_3", [0, 1], index=1)
-        total_docs = st.number_input("TOTAL_DOCUMENTS_SUBMITTED", 0, 4, 1)
+        
         emp_to_income = years_employed / max(amt_income, 1)
 
-    # Build input dict with all 34 features
+    # Build input dict with all 34 features in models_trained.pkl
     input_data = {
-        "EXT_SOURCE_3": ext3, "EXT_SOURCE_2": ext2, "EXT_SOURCE_1": ext1,
+        "EXT_SOURCE_3": ext3,
+        "EXT_SOURCE_2": ext2,
+        "EXT_SOURCE_1": ext1,
         "AGE_YEARS": float(age),
+        "DAYS_BIRTH": float(age) * -365.0,
+        "DAYS_EMPLOYED": float(years_employed) * -365.0,
+        "YEARS_EMPLOYED": float(years_employed),
         "REGION_RATING_CLIENT_W_CITY": region_rating_wc,
         "REGION_RATING_CLIENT": region_rating,
         "NAME_INCOME_TYPE_Working": income_working,
         "NAME_EDUCATION_TYPE_Higher education": edu_higher,
-        "DAYS_LAST_PHONE_CHANGE": days_phone,
-        "CODE_GENDER": code_gender,
-        "YEARS_ID_PUBLISH": years_id,
+        "DAYS_LAST_PHONE_CHANGE": float(days_phone),
+        "CODE_GENDER_M": float(code_gender_m),
+        "EMPLOYMENT_TO_INCOME_RATIO": float(emp_to_income),
+        "DAYS_ID_PUBLISH": float(years_id) * -365.0,
         "REG_CITY_NOT_WORK_CITY": reg_city_not_work,
         "NAME_EDUCATION_TYPE_Secondary / secondary special": edu_secondary,
         "NAME_INCOME_TYPE_Pensioner": income_pensioner,
-        "FLAG_EMP_PHONE": flag_emp_phone,
         "ORGANIZATION_TYPE_XNA": org_xna,
-        "YEARS_REGISTRATION": years_reg,
-        "FLAG_WORK_PHONE": flag_work_phone,
-        "NAME_CONTRACT_TYPE_Revolving loans": contract_revolving,
+        "FLAG_EMP_PHONE": flag_emp_phone,
         "REG_CITY_NOT_LIVE_CITY": reg_city_not_live,
-        "DEF_30_CNT_SOCIAL_CIRCLE": def_30,
-        "LIVE_CITY_NOT_WORK_CITY": live_city_not_work,
-        "DEF_60_CNT_SOCIAL_CIRCLE": def_60,
         "FLAG_DOCUMENT_3": flag_doc3,
-        "AMT_REQ_CREDIT_BUREAU_QRT": amt_req_qrt,
-        "OBS_30_CNT_SOCIAL_CIRCLE": obs_30,
-        "YEARS_EMPLOYED": years_employed,
-        "TOTAL_DOCUMENTS_SUBMITTED": total_docs,
-        "OBS_60_CNT_SOCIAL_CIRCLE": obs_60,
-        "EMPLOYMENT_TO_INCOME_RATIO": emp_to_income,
-        "AMT_CREDIT": amt_credit,
-        "AMT_ANNUITY": amt_annuity,
-        "AMT_INCOME_TOTAL": amt_income,
-        "INCOME_TO_ANNUITY_RATIO": income_to_annuity,
+        "FLOORSMAX_AVG": floorsmax,
+        "FLOORSMAX_MEDI": floorsmax,
+        "FLOORSMAX_MODE": floorsmax,
+        "OCCUPATION_TYPE_Laborers": is_laborer,
+        "DAYS_REGISTRATION": float(years_reg) * -365.0,
+        "AMT_GOODS_PRICE": float(amt_goods_price),
+        "OWN_CAR_AGE": own_car_age,
+        "REGION_POPULATION_RELATIVE": region_pop,
+        "AMT_CREDIT": float(amt_credit),
+        "AMT_ANNUITY": float(amt_annuity),
+        "AMT_INCOME_TOTAL": float(amt_income),
+        "INCOME_TO_ANNUITY_RATIO": float(income_to_annuity),
     }
 
     # --- Predict ---
